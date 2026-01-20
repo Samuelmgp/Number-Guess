@@ -3,6 +3,7 @@ import DB from './db';
 
 interface User {
     id: string;
+    age: number;
     username: string;
     gamesPlayed: number;
     gamesWon: number;
@@ -59,9 +60,10 @@ class UserDataDB {
 }
 
 // Create user:
-export function createUser(username: string): User {
+export function createUser(username: string, age: number): User {
     const newUser: User = {
         id: uuidv4(),
+        age: age,
         username,
         gamesPlayed: 0,
         gamesWon: 0,

@@ -24,9 +24,19 @@ interface State {
 export class ViewController extends React.Component<React.PropsWithChildren, State> {
     state: State = {
         currentView: 'home', // default view ID
+        previousView: undefined,
     };
 
-    navigateTo = (to: ViewID) => {
+    navigateTo = (to?: ViewID) => {
+        if (to === null || to === undefined) return;
+        if (to === this.state.currentView || to === "") return; // No change if navigating to the same view
+        if (to === 'previous' && this.state.previousView) {
+            this.setState((prevState) => ({
+                currentView: prevState.previousView!,
+                previousView: prevState.previousView ? prevState.currentView : undefined,
+            }));
+            return;
+        }
         this.setState((prevState) => ({
             previousView: prevState.currentView,
             currentView: to,
