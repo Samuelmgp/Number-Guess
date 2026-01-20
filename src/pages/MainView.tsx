@@ -5,11 +5,13 @@ import type { User } from "../types/types";
 
 import { ErrorMessage } from "../components/SiteNotification"
 
-export default function MainPage() {
+export default function MainPage({ navigateTo }: {navigateTo:(to?: string) => void}) {
     const user: User | null = getUserData();
 
     function handleGameModeSelection(selected: string) {
         console.log("Game mode: " + selected)
+        const path = selected+"Mode";
+        navigateTo(path)
     }
     
     return user ? (
@@ -21,7 +23,7 @@ export default function MainPage() {
                 max-sm:text-center max-sm:overflow-y-auto">
 
                 <UserStats user={user} />
-                <GameModes />
+                <GameModes selectionHandler={handleGameModeSelection}/>
             </div>
         </div>
     ) 
