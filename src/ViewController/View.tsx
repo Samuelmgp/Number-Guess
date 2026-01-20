@@ -19,7 +19,7 @@ export class View extends React.PureComponent<ViewProps> {
             } = this.props;
 
         return (
-            <div className={active ? "view--active" : "view--inactive"}>
+            <div className={`view ${active ? "view--active" : "view--inactive"}`}>
                 <Component active={active} navigateTo={navigateTo} />
             </div>
         );

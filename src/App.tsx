@@ -1,7 +1,7 @@
 import './css/App.css'
 
-import GameDisplay from './pages/GameDisplay.tsx'
-import { ViewController, View } from './ViewController/VCExport'
+import Welcome from './pages/Welcome.tsx'
+import { ViewController, View } from './ViewController/ViewControllerPackage.tsx'
 
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <ViewController>
-        <View id="home" component={GameDisplay}/>
+        <View id="home" component={Welcome}/>
       </ViewController>
     </>
   )
