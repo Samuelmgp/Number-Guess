@@ -1,9 +1,15 @@
-export default function UserInfo({ navigateTo }: { navigateTo: (to?: string) => void }) {
+import { createUser } from '../db/user_data.ts';
+
+export default function UserInfo({ navigateTo }: { navigateTo: (to?: string) => void}) {
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
         const name = formData.get("name") as string;
-        const age = formData.get("age") as string;
+        const age = formData.get("age") as unknown as number;
+
+        createUser(name, age);
+        
+        console.log("User created:", name, age);
 
         navigateTo();
     }

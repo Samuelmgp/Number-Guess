@@ -73,6 +73,11 @@ export function createUser(username: string, age: number): User {
     return newUser;
 }
 
-export default function getUserData(): User | null {
+export function getUserData(): User | null {
     return UserDataDB.getUser();
 }
+
+export default {
+    createUser,
+    getUserData
+};
