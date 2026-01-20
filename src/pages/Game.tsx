@@ -10,7 +10,7 @@ function handleOnGuess(index: number, number: number){
     return index === number;
 }
 
-function handleSelection(event: BaseSyntheticEvent, index: number, number: number){
+async function handleSelection(event: BaseSyntheticEvent, index: number, number: number, navigateTo: (to?: string) => void){
     const hit = handleOnGuess(index + 1, number)
     const btn = event.currentTarget as HTMLButtonElement;
     
@@ -19,13 +19,16 @@ function handleSelection(event: BaseSyntheticEvent, index: number, number: numbe
     if (hit){
         btn.classList.remove("bg-gray-400")
         btn.classList.add("bg-green-400")
+        btn.classList.add("animate-bounce");
+        await delay(5000)
+        navigateTo("previous")
     }else {
         btn.classList.remove("bg-gray-400")
         btn.classList.add("bg-red-400")
     }
 }
 
-export function EasyMode() {
+export function EasyMode({ navigateTo }: { navigateTo: (to?: string) => void }) {
     const number = random(1, 10)
 
     return (
@@ -34,13 +37,13 @@ export function EasyMode() {
             <h2 className="text-lg text-white">This is the Easy Mode of the game. Enjoy a relaxed gaming experience!</h2>
             <p>Guessing a number between 1-10 has never been easier!</p>
             <div>
-                <GuessBar onGuess={(e, index) => handleSelection(e, index, number)}/>
+                <GuessBar onGuess={(e, index) => handleSelection(e, index, number, navigateTo)}/>
             </div>
         </div>
     );
 }
 
-export function MediumMode() {
+export function MediumMode({ navigateTo }: { navigateTo: (to?: string) => void }) {
     const number = random(1, 20)
 
     return (
@@ -49,13 +52,13 @@ export function MediumMode() {
             <h2 className="text-lg text-white">This is the Medium Mode of the game. Test your skills with a moderate challenge!</h2>
             <p>Guessing a number between 1 and 20 might be tricky!</p>
             <div>
-                <GuessBar items={20} onGuess={(e, index) => handleSelection(e, index, number)}/>
+                <GuessBar items={20} onGuess={(e, index) => handleSelection(e, index, number, navigateTo)}/>
             </div>
         </div>
     );
 }
 
-export function HardMode() {
+export function HardMode({ navigateTo }: { navigateTo: (to?: string) => void }) {
     const number = random(1, 50)
 
     return (
@@ -64,13 +67,13 @@ export function HardMode() {
             <h2 className="text-lg text-white">This is the Hard Mode of the game. Prepare for a challenging experience!</h2>
             <p>Guessing a number between 1 and 50 must be a lottery guess!</p>
             <div>
-                <GuessBar items={50} onGuess={(e, index) => handleSelection(e, index, number)}/>
+                <GuessBar items={50} onGuess={(e, index) => handleSelection(e, index, number, navigateTo)}/>
             </div>
         </div>
     );
 }
 
-export function ExtremeMode() {
+export function ExtremeMode({ navigateTo }: { navigateTo: (to?: string) => void }) {
     const number = random(1, 100)
 
     return (
@@ -79,7 +82,7 @@ export function ExtremeMode() {
             <h2 className="text-lg text-white">This is the Extreme Mode of the game. Get ready for the ultimate challenge!</h2>
             <p>Guessing a number between 1 and 100 is a nightmare!</p>
             <div>
-                <GuessBar items={100} onGuess={(e, index) => handleSelection(e, index, number)}/>
+                <GuessBar items={100} onGuess={(e, index) => handleSelection(e, index, number, navigateTo)}/>
             </div>
         </div>
     );
@@ -90,4 +93,8 @@ export default {
     MediumMode,
     HardMode,
     ExtremeMode
+}
+
+function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms))
 }
