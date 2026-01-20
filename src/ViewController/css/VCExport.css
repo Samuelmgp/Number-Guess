@@ -1,0 +1,21 @@
+.view-controller {
+  position: relative;
+  overflow: hidden;
+}
+
+.view {
+  position: absolute;
+  inset: 0;
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.view--inactive {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(12px);
+}
+
+.view--active {
+  opacity: 1;
+  transform: translateX(0);
+}
