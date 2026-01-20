@@ -5,7 +5,7 @@ export default function Welcome({ navigateTo }: { navigateTo: (to?: string) => v
 
     function handleClick() {
         if (user) {
-            navigateTo();
+            navigateTo("menu");
         } else {
             navigateTo("user-info");
         }

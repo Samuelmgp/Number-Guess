@@ -1,14 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import DB from './db';
-
-interface User {
-    id: string;
-    age: number;
-    username: string;
-    gamesPlayed: number;
-    gamesWon: number;
-    guessesMade: number;
-}
+import type { User } from '../types/types';
 
 // Initialize Database & Database Handlers:
 class UserDataDB {
