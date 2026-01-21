@@ -37,6 +37,7 @@ export class ViewController extends React.Component<React.PropsWithChildren, Sta
             }));
             return;
         }
+        
         this.setState((prevState) => ({
             previousView: prevState.currentView,
             currentView: to,
