@@ -41,7 +41,7 @@ function GameTemplate(props: GameProps){
 
     return (
         <div className="h-full w-full flex flex-col items-center gap-2
-                        pt-4 pb-10 bg-gray-800
+                        pt-4 pb-10 bg-zinc-800
                         overflow-y-auto">
             <div className="mt-4 flex flex-row gap-4">
                 <button onClick={() => props.navigateTo("previous")} className="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded font-semibold">

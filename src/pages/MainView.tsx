@@ -15,12 +15,14 @@ export default function MainPage({ navigateTo }: {navigateTo:(to?: string) => vo
     }
     
     return user ? (
-        <div className="h-full w-full flex flex-col items-center justify-center gap-10">
+        <div className="h-full w-full flex flex-col items-center justify-center gap-10 p-5">
             <h1 className="text-4xl p-5 font-bold text-cyan-500 text-shadow-cyan-800 text-shadow-lg rounded">Number Guess</h1>
-            <div className="w-9/10 flex flex-row gap-25 items-center justify-center-safe
-                bg-zinc-800 p-20 rounded-lg shadow-lg/70 overflow-hidden
-                max-sm:flex-col max-sm:gap-10 max-sm:mb-5
-                max-sm:text-center max-sm:overflow-y-auto">
+            <div className="flex flex-box flex-row gap-25
+                items-center justify-center-safe
+                bg-zinc-800 p-20 rounded-lg shadow-lg/70
+                max-md:flex-col max-sm:gap-10 max-sm:mb-5
+                max-sm:text-center
+                overflow-y-auto">
 
                 <UserStats user={user} />
                 <GameModes selectionHandler={handleGameModeSelection}/>
