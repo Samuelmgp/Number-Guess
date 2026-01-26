@@ -16,12 +16,12 @@ export default function GuessBar({items = 10, locked, onGuess}: Props){
     }
 
     return (
-        <div className="px-10 h-1/3 grid grid-cols-10 gap-12 
+        <div className="px-10 grid grid-cols-10 gap-12 
                         flex-wrap justify-self-center items-center
                         max-sm:gap-6  max-sm:grid-cols-5           
                         max-md:gap-8
-                        max-lg:gap-10
-                        mb-15">
+                        max-lg:gap-10 mb-20
+                        h-3/5 overflow-y-auto">
             {Array.from({length: items}, (_, i) => (
                 <div className="flex flex-col items-center gap-2" key={i}>
                     <button 
