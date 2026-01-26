@@ -2,13 +2,11 @@ import type { User } from "../types/types";
 import random from "../utils/random";
 import { getUserData } from "../db/user_data";
 import GuessBar from "../components/GuessBar";
-import type { BaseSyntheticEvent } from "react";
+import { useState, type BaseSyntheticEvent } from "react";
 
 const user: User | null = getUserData();
 
-function handleOnGuess(index: number, number: number){
-    return index === number;
-}
+export type GuessResult = "hit" | "miss";
 
 interface GameProps {
     navigateTo: (to?: string) => void;
@@ -19,26 +17,27 @@ interface GameProps {
     titleStye?: string;
 }
 
-async function handleSelection(event: BaseSyntheticEvent, index: number, number: number, navigateTo: (to?: string) => void){
-    const hit = handleOnGuess(index + 1, number)
-    const btn = event.currentTarget as HTMLButtonElement;
-    
-    btn.disabled = true;
-
-    if (hit){
-        btn.classList.remove("bg-gray-400")
-        btn.classList.add("bg-green-400")
-        btn.classList.add("animate-bounce");
-        await delay(5000)
-        navigateTo("previous")
-    }else {
-        btn.classList.remove("bg-gray-400")
-        btn.classList.add("bg-red-400")
-    }
-}
-
 function GameTemplate(props: GameProps){
-    const number = random(1, props.items!);
+    const max = props.items ?? 10;
+
+    const [number, setNumber] = useState(() => random(1, max));
+    const [gameKey, setGameKey] = useState(0); // Used to reset the GuessBar
+    const [locked, setLocked] = useState(false);
+
+    function handleGuess(index: number): GuessResult {
+        const hit = index + 1 === number;
+        if (hit) {
+            setLocked(true);
+            setTimeout(() => props.navigateTo("previous"), 1500);
+        }
+        return hit ? "hit" : "miss";
+    }
+
+    function resetGame() {
+        setNumber(random(1, max));
+        setLocked(false);
+        setGameKey(prev => prev + 1); // Change key to reset GuessBar
+    }
 
     return (
         <div className="h-full w-full flex flex-col items-center justify-center gap-10
@@ -47,7 +46,7 @@ function GameTemplate(props: GameProps){
                 <button onClick={() => props.navigateTo("previous")} className="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded font-semibold">
                     Return to Menu
                 </button>
-                <button onClick={() => props.navigateTo()} className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded font-semibold">
+                <button onClick={resetGame} className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded font-semibold">
                     Reset Game
                 </button>
             </div>
@@ -56,7 +55,7 @@ function GameTemplate(props: GameProps){
                             text-shadow-lg rounded`}>{props.levelTitle}</h1>
             <h2 className="text-lg text-white text-center px-2">{props.description}</h2>
             <p className="mx-10 text-center">{props.quote}</p>
-            <GuessBar items={props.items} onGuess={(e, index) => handleSelection(e, index, number, props.navigateTo)}/>
+            <GuessBar items={props.items} key={gameKey} locked={locked} onGuess={handleGuess}/>
         </div>
     );
 }
