@@ -2,7 +2,7 @@ import type { User } from "../types/types";
 import random from "../utils/random";
 import { getUserData } from "../db/user_data";
 import GuessBar from "../components/GuessBar";
-import { useState, type BaseSyntheticEvent } from "react";
+import { useState } from "react";
 
 const user: User | null = getUserData();
 
@@ -40,24 +40,23 @@ function GameTemplate(props: GameProps){
     }
 
     return (
-        <>
-            <div className="flex flex-col items-center gap-2
-                            overflow-y-auto">
-                <div className="mt-4 flex flex-row gap-4">
-                    <button onClick={() => props.navigateTo("previous")} className="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded font-semibold">
-                        Return to Menu
-                    </button>
-                    <button onClick={resetGame} className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded font-semibold">
-                        Reset Game
-                    </button>
-                </div>
-                <h1 className={`text-4xl p-5 font-bold ${props.titleStye}
-                                text-shadow-lg rounded`}>{props.levelTitle}</h1>
-                <h2 className="text-lg text-white text-center px-2">{props.description}</h2>
-                <p className="mx-10 text-center mb-10">{props.quote}</p>
+        <div className="h-full w-full flex flex-col items-center gap-2
+                        pt-4 pb-10 bg-gray-800
+                        overflow-y-auto">
+            <div className="mt-4 flex flex-row gap-4">
+                <button onClick={() => props.navigateTo("previous")} className="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded font-semibold">
+                    Return to Menu
+                </button>
+                <button onClick={resetGame} className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded font-semibold">
+                    Reset Game
+                </button>
             </div>
+            <h1 className={`text-4xl p-5 font-bold ${props.titleStye}
+                            text-shadow-lg rounded`}>{props.levelTitle}</h1>
+            <h2 className="text-lg text-white text-center px-2">{props.description}</h2>
+            <p className="mx-10 text-center mb-5">{props.quote}</p>
             <GuessBar items={props.items} key={gameKey} locked={locked} onGuess={handleGuess}/>
-        </>
+        </div>
     );
 }
 
