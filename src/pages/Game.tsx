@@ -1,10 +1,6 @@
-import type { User } from "../types/types";
 import random from "../utils/random";
-import { getUserData } from "../db/user_data";
 import GuessBar from "../components/GuessBar";
 import { useState } from "react";
-
-const user: User | null = getUserData();
 
 export type GuessResult = "hit" | "miss";
 
