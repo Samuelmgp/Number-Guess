@@ -30,7 +30,7 @@ export default function UserInfo({ navigateTo }: { navigateTo: (to?: string) => 
                     className="w-20 mt-4 px-4 py-2 bg-green-500 text-white rounded
                                 transition delay-100 ease-in-out duration-300
                                 hover:bg-green-600 hover:scale-120" 
-                    onClick={() => navigateTo()}>Play</button>
+                    onClick={() => navigateTo('menu')}>Play</button>
                 </div>
             </form>
         </div>

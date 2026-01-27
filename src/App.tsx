@@ -7,6 +7,7 @@ import MainPage from './pages/MainView.tsx'
 import { EasyMode, MediumMode, HardMode, ExtremeMode } from './pages/Game.tsx'
 
 import { ViewController, View } from './ViewController/ViewControllerPackage.tsx'
+import Congratulations from './pages/Congratulations.tsx'
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <>
       <ViewController>
         <View id="home" component={Welcome} />
+        <View id="win" component={Congratulations} />
         <View id="user-info" component={UserInfo} />
         <View id="menu" component={MainPage} />
         <View id="easyMode" component={EasyMode} />
