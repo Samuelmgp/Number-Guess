@@ -11,7 +11,7 @@ export default function UserInfo({ navigateTo }: { navigateTo: (to?: string) => 
         
         console.log("User created:", name, age);
 
-        navigateTo();
+        navigateTo('menu');
     }
 
     return (
