@@ -28,7 +28,8 @@ function GameTemplate(props: GameProps){
         const hit = index + 1 === number;
         if (hit) {
             setLocked(true);
-            setTimeout(() => props.navigateTo("previous"), 1500);
+            setTimeout(() => resetGame(), 1501); // Reset game after win animation
+            setTimeout(() => props.navigateTo("win"), 1500);
         }
         return hit ? "hit" : "miss";
     }
@@ -108,8 +109,4 @@ export default {
     MediumMode,
     HardMode,
     ExtremeMode
-}
-
-function delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms))
 }
