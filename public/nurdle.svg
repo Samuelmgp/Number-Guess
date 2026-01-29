@@ -1,0 +1,19 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle -->
+    <circle cx="100" cy="100" r="95" fill="#1a1a2e" stroke="#00d4ff" stroke-width="2"/>
+    
+    <!-- Question mark shape -->
+    <text x="100" y="130" font-size="80" font-weight="bold" text-anchor="middle" fill="#00d4ff" font-family="Arial">?</text>
+    
+    <!-- Dice -->
+    <rect x="30" y="30" width="30" height="30" rx="3" fill="#ff6b6b" stroke="#fff" stroke-width="1.5"/>
+    <circle cx="37" cy="37" r="2" fill="#fff"/>
+    <circle cx="52" cy="52" r="2" fill="#fff"/>
+    
+    <!-- Dice 2 -->
+    <rect x="140" y="140" width="30" height="30" rx="3" fill="#4ecdc4" stroke="#fff" stroke-width="1.5"/>
+    <circle cx="147" cy="147" r="2" fill="#fff"/>
+    <circle cx="155" cy="155" r="2" fill="#fff"/>
+    <circle cx="163" cy="163" r="2" fill="#fff"/>
+
+</svg>
