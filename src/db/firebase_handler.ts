@@ -1,8 +1,12 @@
-import { auth, db } from '../db/firebase_db';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 import { saveJSONToken, getToken, clearUserData } from './token_handler';
+import { saveLocalUserData, loadLocalUserData, clearLocalUserData } from './local_user';
 import type { User, JSONCredentialToken } from '../types/types';
+
+function createLocalUserData(user: User): void {
+    // This function can be expanded to save user data locally if needed
+    saveLocalUserData(user);
+}
+
 
 async function createJSONCredentialToken(user: any, username: string): Promise<JSONCredentialToken> {
     try {
@@ -22,6 +26,9 @@ async function createJSONCredentialToken(user: any, username: string): Promise<J
 }
 
 async function createFirestoreUserData(user: any, username: string): Promise<User> {
+    const { db } = await import('./firebase_db');
+    const { doc, setDoc, collection } = await import('firebase/firestore');
+
     const newUser: User = {
         uid: user.uid,
         displayName: username,
@@ -41,6 +48,9 @@ async function createFirestoreUserData(user: any, username: string): Promise<Use
 
 export async function createUser(username: string, email: string, password: string): Promise<{user: User, newUser?: User}> {
     try {
+        const { auth } = await import('./firebase_db');
+        const { createUserWithEmailAndPassword } = await import('firebase/auth');
+
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const firebaseUser = userCredential.user;
 
@@ -48,6 +58,7 @@ export async function createUser(username: string, email: string, password: stri
         const newUser = await createFirestoreUserData(firebaseUser, username);
 
         // Create and save JSON Credential Token
+        createLocalUserData(newUser);
         await createJSONCredentialToken(firebaseUser, username);
 
         return { user: newUser, newUser };
@@ -59,6 +70,10 @@ export async function createUser(username: string, email: string, password: stri
 export function attemptLogin(email: string, password: string): Promise<User> {
     return new Promise(async (resolve, reject) => {
         try {
+            const { auth, db } = await import('./firebase_db');
+            const { signInWithEmailAndPassword } = await import('firebase/auth');
+            const { doc, getDoc } = await import('firebase/firestore');
+
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const firebaseUser = userCredential.user;
 
@@ -70,6 +85,7 @@ export function attemptLogin(email: string, password: string): Promise<User> {
             }
             const userData = userDoc.data() as User;
 
+            saveLocalUserData(userData);
             // Create and save JSON Credential Token
             await createJSONCredentialToken(firebaseUser, userData.displayName);
 
@@ -80,10 +96,15 @@ export function attemptLogin(email: string, password: string): Promise<User> {
     });
 }
 
+export function getLocalUserData(): User | null {
+    return loadLocalUserData();
+}
+
 export function loadJSONToken(): JSONCredentialToken | null {
     return getToken();
 }
 
-export function removeUserData(): void {
+export function removeLocalUserData(): void {
     clearUserData();
+    clearLocalUserData();
 }

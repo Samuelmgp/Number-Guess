@@ -2,7 +2,7 @@ import DB from './localstorage_db';
 import type { JSONCredentialToken } from '../types/types';
 
 // Initialize Database & Database Handlers:
-class UserDataDB {
+class TokenStorage {
     private static readonly USER_KEY = 'json_key';
 
     public static saveJSONToken(token: JSONCredentialToken): void {
@@ -25,13 +25,13 @@ class UserDataDB {
 }
 
 export function saveJSONToken(token: JSONCredentialToken): void {
-    UserDataDB.saveJSONToken(token);
+    TokenStorage.saveJSONToken(token);
 }
 
 export function getToken(): JSONCredentialToken | null {
-    return UserDataDB.getUserWithToken();
+    return TokenStorage.getUserWithToken();
 }
 
 export function clearUserData(): void {
-    UserDataDB.clearUserData();
+    TokenStorage.clearUserData();
 }
