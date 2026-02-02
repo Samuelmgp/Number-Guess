@@ -13,8 +13,11 @@ export default function MainPage({ navigateTo }: {navigateTo:(to?: string) => vo
     
     return (
         <div className="h-full w-full flex flex-col items-center justify-center gap-10 p-5">
-            <h1 className="shrink-0 text-4xl p-5 font-bold text-cyan-500 
-                            text-shadow-cyan-800 text-shadow-lg rounded">Number Guess</h1>
+            <div>
+                <h1 className="shrink-0 text-4xl p-5 font-bold text-cyan-500 
+                                text-shadow-cyan-800 text-shadow-lg rounded text-center">Nurdle</h1>
+                <h2 className="text-lg text-cyan-600 text-shadow-cyan-800 text-shadow-lg text-center">The number guessing game </h2>
+            </div>
             <div className="flex flex-col gap-10
                 items-center justify-center-safe
                 bg-zinc-800 p-20 rounded-lg shadow-lg/70
