@@ -67,9 +67,8 @@ export async function createUser(username: string, email: string, password: stri
     }
 }
 
-export function attemptLogin(email: string, password: string): Promise<User> {
-    return new Promise(async (resolve, reject) => {
-        try {
+export async function attemptLogin(email: string, password: string): Promise<User> {
+    try {
             const { auth, db } = await import('./firebase_db');
             const { signInWithEmailAndPassword } = await import('firebase/auth');
             const { doc, getDoc } = await import('firebase/firestore');
@@ -89,11 +88,10 @@ export function attemptLogin(email: string, password: string): Promise<User> {
             // Create and save JSON Credential Token
             await createJSONCredentialToken(firebaseUser, userData.displayName);
 
-            resolve(userData);
-        } catch (error) {
-            reject(new Error("Login failed: " + (error as Error).message));
-        }
-    });
+            return userData;
+    }catch (error) {
+        throw new Error("Login failed: " + (error as Error).message);
+    }
 }
 
 export function getLocalUserData(): User | null {
