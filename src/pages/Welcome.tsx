@@ -17,11 +17,10 @@ export default function Welcome({ navigateTo }: { navigateTo: (to?: string) => v
             <img src="/nurdle.svg" alt="Nurdle Logo" className="w-32 h-32 animate-pulse"/>
             <div className="flex flex-col items-center justify-center">
                 <h1 className="text-2xl font-bold">Welcome to Nurdle!</h1>
-                {user ? 
-                (<p className="text-md">Happy to see you come back, {user.displayName}!</p>)
-                : 
-                (<p className="text-md">Lets get to know you a little bit before we start the game!</p>)
-                }
+                <p className="text-md px-2 text-center text-wrap">
+                    {user ? `We're happy to see you again, ${user.displayName}!` : "Lets get to know you a bit before we start, or just try the game modes out as a guest!"}
+                </p>
+
                 <button 
                 className="mt-4 px-4 py-2 bg-green-500 text-white rounded
                             transition delay-100 ease-in-out duration-300 
