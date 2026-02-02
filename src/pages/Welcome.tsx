@@ -1,13 +1,14 @@
-import { getUserData } from "../db/user_data";
+import { loadJSONToken } from "../db/firebase_handler";
+
 
 export default function Welcome({ navigateTo }: { navigateTo: (to?: string) => void }) {
-    const user = getUserData();
-
+    const user = loadJSONToken();
     function handleClick() {
+        console.log("Loaded user token:", user);
         if (user) {
             navigateTo("menu");
         } else {
-            navigateTo("user-info");
+            navigateTo("login");
         }
     }
 
@@ -15,9 +16,9 @@ export default function Welcome({ navigateTo }: { navigateTo: (to?: string) => v
         <div className="h-full w-full flex flex-col items-center justify-center gap-2">
             <img src="/nurdle.svg" alt="Nurdle Logo" className="w-32 h-32 animate-pulse"/>
             <div className="flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold">Welcome!</h1>
+                <h1 className="text-2xl font-bold">Welcome to Nurdle!</h1>
                 {user ? 
-                (<p className="text-md">Welcome back, {user.username}!</p>)
+                (<p className="text-md">Happy to see you come back, {user.displayName}!</p>)
                 : 
                 (<p className="text-md">Lets get to know you a little bit before we start the game!</p>)
                 }
