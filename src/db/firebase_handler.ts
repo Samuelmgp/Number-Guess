@@ -1,3 +1,4 @@
+import {auth, db } from './firebase_db';
 import { saveJSONToken, getToken, clearUserData } from './token_handler';
 import { saveLocalUserData, loadLocalUserData, clearLocalUserData } from './local_user';
 import type { User, JSONCredentialToken } from '../types/types';
@@ -26,7 +27,6 @@ async function createJSONCredentialToken(user: any, username: string): Promise<J
 }
 
 async function createFirestoreUserData(user: any, username: string): Promise<User> {
-    const { db } = await import('./firebase_db');
     const { doc, setDoc, collection } = await import('firebase/firestore');
 
     const newUser: User = {
@@ -48,7 +48,6 @@ async function createFirestoreUserData(user: any, username: string): Promise<Use
 
 export async function createUser(username: string, email: string, password: string): Promise<{user: User, newUser?: User}> {
     try {
-        const { auth } = await import('./firebase_db');
         const { createUserWithEmailAndPassword } = await import('firebase/auth');
 
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -67,10 +66,8 @@ export async function createUser(username: string, email: string, password: stri
     }
 }
 
-export function attemptLogin(email: string, password: string): Promise<User> {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const { auth, db } = await import('./firebase_db');
+export async function attemptLogin(email: string, password: string): Promise<User> {
+    try {
             const { signInWithEmailAndPassword } = await import('firebase/auth');
             const { doc, getDoc } = await import('firebase/firestore');
 
@@ -89,11 +86,10 @@ export function attemptLogin(email: string, password: string): Promise<User> {
             // Create and save JSON Credential Token
             await createJSONCredentialToken(firebaseUser, userData.displayName);
 
-            resolve(userData);
-        } catch (error) {
-            reject(new Error("Login failed: " + (error as Error).message));
-        }
-    });
+            return userData;
+    }catch (error) {
+        throw new Error("Login failed: " + (error as Error).message);
+    }
 }
 
 export function getLocalUserData(): User | null {
