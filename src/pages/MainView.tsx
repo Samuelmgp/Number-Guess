@@ -26,7 +26,14 @@ export default function MainPage({ navigateTo }: {navigateTo:(to?: string) => vo
                 overflow-y-auto">
                     
                 {jsonToken && <UserStats token={jsonToken}/>}
-                <GameModes selectionHandler={handleGameModeSelection}/>
+                <div className="flex flex-col items-center justify-center gap-10">
+                    <GameModes selectionHandler={handleGameModeSelection}/>
+                    {!jsonToken && 
+                    <button className="px-4 py-2 bg-green-500 text-white rounded 
+                                        hover:bg-green-600 hover:scale-110 transition duration-300
+                                        ease-in-out cursor-pointer" 
+                                        onClick={() => navigateTo("login")}>Login</button>}
+                </div>
             </div>
         </div>
     )
