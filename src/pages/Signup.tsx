@@ -28,7 +28,6 @@ export default function UserInfo({ navigateTo }: { navigateTo: (to?: string) => 
         if (password === rpassword) {
             // Proceed with user creation
             await createUser(username, email, password).then((result) => {
-                console.log("User created:", result?.user.uid);
                 if (!result?.user) {setError(true); setErrorMessage("User creation failed."); return;}
                 if (!result?.newUser) {setError(true); setErrorMessage("New user data not found."); return;}
                 

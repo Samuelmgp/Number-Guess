@@ -4,7 +4,6 @@ import { loadJSONToken } from "../db/firebase_handler";
 export default function Welcome({ navigateTo }: { navigateTo: (to?: string) => void }) {
     const user = loadJSONToken();
     function handleClick() {
-        console.log("Loaded user token:", user);
         if (user) {
             navigateTo("menu");
         } else {
