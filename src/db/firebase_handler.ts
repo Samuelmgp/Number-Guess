@@ -34,7 +34,7 @@ async function createFirestoreUserData(user: any, username: string): Promise<Use
         displayName: username,
         gamesPlayed: 0,
         gamesWon: 0,
-        guessesMade: 0,
+        totalGuessesMade: 0,
     };
     
     try {

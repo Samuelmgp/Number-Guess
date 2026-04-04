@@ -25,6 +25,10 @@ function App() {
         <View id="hardMode" component={HardMode} />
         <View id="extremeMode" component={ExtremeMode} />
         <View id="win" component={Congratulations} />
+        {/* Test Views 
+        <View id="viewTransfer" component={ViewTransfer} />
+        <View id="viewReciever" component={ViewReciever} />
+        */}
       </ViewController>
     </>
   )

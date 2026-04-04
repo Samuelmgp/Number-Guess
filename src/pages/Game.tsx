@@ -1,11 +1,14 @@
 import random from "../utils/random";
 import GuessBar from "../components/GuessBar";
 import { useState } from "react";
+import type { GameStats } from "../types/types";
+
 
 export type GuessResult = "hit" | "miss";
 
 interface GameProps {
-    navigateTo: (to?: string) => void;
+    navigateTo: (to?: string, props?: GameStats) => void;
+    difficulty: 1 | 2 | 5 | 10; // 1, 2, 5, 10
     levelTitle: string;
     description: string;
     quote: string;
@@ -19,13 +22,26 @@ function GameTemplate(props: GameProps){
     const [number, setNumber] = useState(() => random(1, max));
     const [gameKey, setGameKey] = useState(0); // Used to reset the GuessBar
     const [locked, setLocked] = useState(false);
+    
+    // Game Stats useStates
+    const [guesses, setGuesses] = useState(0);
+
 
     function handleGuess(index: number): GuessResult {
         const hit = index + 1 === number;
         if (hit) {
+            setGuesses(prev => prev + 1);
             setLocked(true);
+            // Update statistics:
+            const accuracy = ((max - guesses) / max) * 100;
+            // End of Stats
             setTimeout(() => resetGame(), 1501); // Reset game after win animation
-            setTimeout(() => props.navigateTo("win"), 1500);
+            setTimeout(() => props.navigateTo("win", { guessesMade: guesses, 
+                                                        gameDifficulty: props.difficulty, 
+                                                        accuracy } as GameStats), 
+                        1500);
+        }else {
+            setGuesses(prev => prev + 1);
         }
         return hit ? "hit" : "miss";
     }
@@ -60,6 +76,7 @@ function GameTemplate(props: GameProps){
 export function EasyMode({ navigateTo }: { navigateTo: (to?: string) => void }) {
     return GameTemplate({
             navigateTo,
+            difficulty: 1,
             levelTitle: "Easy Mode",
             description: "This is the Easy Mode of the game. Enjoy a relaxed gaming experience!",
             quote: "Guessing a number between 1-10 has never been easier!",
@@ -70,6 +87,7 @@ export function EasyMode({ navigateTo }: { navigateTo: (to?: string) => void }) 
 export function MediumMode({ navigateTo }: { navigateTo: (to?: string) => void }) {
     return GameTemplate({
             navigateTo,
+            difficulty: 2,
             levelTitle: "Medium Mode",
             description: "This is the Medium Mode of the game. Test your skills with a moderate challenge!",
             quote: "Guessing a number between 1 and 20 might be tricky!",
@@ -81,6 +99,7 @@ export function MediumMode({ navigateTo }: { navigateTo: (to?: string) => void }
 export function HardMode({ navigateTo }: { navigateTo: (to?: string) => void }) {
     return GameTemplate({
             navigateTo,
+            difficulty: 5,
             levelTitle: "Hard Mode",
             description: "This is the Hard Mode of the game. Prepare for a challenging experience!",
             quote: "Guessing a number between 1 and 50 must be a lottery guess!",
@@ -92,6 +111,7 @@ export function HardMode({ navigateTo }: { navigateTo: (to?: string) => void }) 
 export function ExtremeMode({ navigateTo }: { navigateTo: (to?: string) => void }) {
     return GameTemplate({
             navigateTo,
+            difficulty: 10,
             levelTitle: "Extreme Mode",
             description: "This is the Extreme Mode of the game. Get ready for the ultimate challenge!",
             quote: "Guessing a number between 1 and 100 is a nightmare!",

@@ -5,6 +5,7 @@ import { View } from "./View";
 interface State {
     currentView: ViewID;
     previousView?: ViewID;
+    pageData?: any; // Optional state to hold props for the current page
 }
 
 /**
@@ -25,15 +26,18 @@ export class ViewController extends React.Component<React.PropsWithChildren, Sta
     state: State = {
         currentView: 'home', // default view ID
         previousView: undefined,
+        pageData: undefined,
     };
 
-    navigateTo = (to?: ViewID) => {
+    navigateTo = (to?: ViewID, props?: any) => {
+        console.log(`Navigating to: ${to}`, props);
         if (to === null || to === undefined) return;
         if (to === this.state.currentView || to === "") return; // No change if navigating to the same view
         if (to === 'previous' && this.state.previousView) {
             this.setState((prevState) => ({
                 currentView: prevState.previousView!,
                 previousView: prevState.previousView ? prevState.currentView : undefined,
+                pageData: undefined, // Clear page data when navigating back
             }));
             return;
         }
@@ -41,8 +45,13 @@ export class ViewController extends React.Component<React.PropsWithChildren, Sta
         this.setState((prevState) => ({
             previousView: prevState.currentView,
             currentView: to,
+            pageData: props ?? undefined, // Clear page data when navigating to a new view
         }));
     };
+
+    getData = () => {
+        return this.state.pageData || {}; // Return page data or an empty object if not set
+    }
 
     render() {
         const { currentView } = this.state;
@@ -56,6 +65,7 @@ export class ViewController extends React.Component<React.PropsWithChildren, Sta
                     return React.cloneElement<ViewProps>(child, {
                         active: child.props.id === currentView,
                         navigateTo: this.navigateTo,
+                        getData: this.getData, // Pass the getData function to the active view
                     });
                 })}
             </div>
