@@ -8,7 +8,7 @@ export default function UserStats({token}: {token: JSONCredentialToken}) {
         displayName: token.displayName,
         gamesPlayed: 0,
         gamesWon: 0,
-        guessesMade: 0,
+        totalGuessesMade: 0,
     };
 
     function handleLoggout() {
@@ -22,7 +22,7 @@ export default function UserStats({token}: {token: JSONCredentialToken}) {
                 <p className="font-semibold mt-4">User: {user.displayName}</p>
                 <p>Games Played: {user.gamesPlayed}</p>
                 <p>Games Won: {user.gamesWon}</p>
-                <p className="mb-4">Total Guesses Made: {user.guessesMade}</p>
+                <p className="mb-4">Total Guesses Made: {user.totalGuessesMade}</p>
                 <button className="mt-2 px-2 py-1 bg-red-500 text-white rounded
                                 transition delay-100 ease-in-out duration-300 
                                 hover:bg-red-600 hover:scale-110 cursor-pointer" 
