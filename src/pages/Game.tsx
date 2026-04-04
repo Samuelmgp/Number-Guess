@@ -34,6 +34,9 @@ function GameTemplate(props: GameProps){
             setLocked(true);
             // Update statistics:
             const accuracy = ((max - guesses) / max) * 100;
+            setGuesses(0); // Reset guesses for next game
+            // TODO: Update Firebase stats
+
             // End of Stats
             setTimeout(() => resetGame(), 1501); // Reset game after win animation
             setTimeout(() => props.navigateTo("win", { guessesMade: guesses, 
