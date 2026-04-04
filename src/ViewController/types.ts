@@ -10,4 +10,5 @@ export interface ViewProps {
     component: React.ComponentType<ViewRenderProps>;
     active?: boolean;
     navigateTo?: (to?: ViewID) => void;
+    props?: any;
 }

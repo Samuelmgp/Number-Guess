@@ -15,12 +15,13 @@ export class View extends React.PureComponent<ViewProps> {
         const { 
             component: Component, 
             active = false, 
-            navigateTo = () => {} 
+            navigateTo = () => {},
+            props = this.props.props || {},
             } = this.props;
 
         return (
             <div className={`view ${active ? "view--active" : "view--inactive"}`}>
-                <Component active={active} navigateTo={navigateTo} />
+                <Component active={active} navigateTo={navigateTo} {...props} />
             </div>
         );
     }

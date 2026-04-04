@@ -5,6 +5,7 @@ import { View } from "./View";
 interface State {
     currentView: ViewID;
     previousView?: ViewID;
+    pageProps?: any; // Optional state to hold props for the current page
 }
 
 /**
@@ -25,15 +26,17 @@ export class ViewController extends React.Component<React.PropsWithChildren, Sta
     state: State = {
         currentView: 'home', // default view ID
         previousView: undefined,
+        pageProps: undefined,
     };
 
-    navigateTo = (to?: ViewID) => {
+    navigateTo = (to?: ViewID, props?: any) => {
         if (to === null || to === undefined) return;
         if (to === this.state.currentView || to === "") return; // No change if navigating to the same view
         if (to === 'previous' && this.state.previousView) {
             this.setState((prevState) => ({
                 currentView: prevState.previousView!,
                 previousView: prevState.previousView ? prevState.currentView : undefined,
+                pageProps: undefined, // Clear page props when navigating back
             }));
             return;
         }
@@ -41,6 +44,7 @@ export class ViewController extends React.Component<React.PropsWithChildren, Sta
         this.setState((prevState) => ({
             previousView: prevState.currentView,
             currentView: to,
+            pageProps: props ?? undefined, // Clear page props when navigating to a new view
         }));
     };
 
@@ -56,6 +60,7 @@ export class ViewController extends React.Component<React.PropsWithChildren, Sta
                     return React.cloneElement<ViewProps>(child, {
                         active: child.props.id === currentView,
                         navigateTo: this.navigateTo,
+                        props: child.props.id === currentView ? this.state.pageProps : child.props.props, // Pass pageProps to the active view
                     });
                 })}
             </div>
