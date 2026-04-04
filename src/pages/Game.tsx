@@ -40,6 +40,8 @@ function GameTemplate(props: GameProps){
                                                         gameDifficulty: props.difficulty, 
                                                         accuracy } as GameStats), 
                         1500);
+        }else {
+            setGuesses(prev => prev + 1);
         }
         return hit ? "hit" : "miss";
     }

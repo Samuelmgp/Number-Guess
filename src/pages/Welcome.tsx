@@ -8,7 +8,7 @@ export default function Welcome({ navigateTo }: { navigateTo: (to?: string) => v
         if (user) {
             navigateTo("menu");
         } else {
-            navigateTo("viewTransfer");
+            navigateTo("login");
         }
     }
 
