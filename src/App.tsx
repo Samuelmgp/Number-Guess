@@ -9,6 +9,8 @@ import Congratulations from './pages/Congratulations.tsx'
 import { EasyMode, MediumMode, HardMode, ExtremeMode } from './pages/Game.tsx'
 
 import { ViewController, View } from './ViewController/ViewControllerPackage.tsx'
+import ViewReciever from './Test/pages/ViewReciever.tsx'
+import ViewTransfer from './Test/pages/ViewTransfer.tsx'
 
 
 function App() {
@@ -25,6 +27,10 @@ function App() {
         <View id="hardMode" component={HardMode} />
         <View id="extremeMode" component={ExtremeMode} />
         <View id="win" component={Congratulations} />
+        {/* Test Views 
+        <View id="viewTransfer" component={ViewTransfer} />
+        <View id="viewReciever" component={ViewReciever} />
+        */}
       </ViewController>
     </>
   )
