@@ -21,7 +21,7 @@ export default function MainPage({ navigateTo }: {navigateTo:(to?: string) => vo
             <div className="flex flex-col gap-10
                 items-center justify-center-safe
                 bg-zinc-800 p-20 rounded-lg shadow-lg/70
-                min-lg:flex-row min-lg:gap-25
+                lg:flex-row lg:gap-25
                 max-lg:text-center
                 overflow-y-auto">
                     

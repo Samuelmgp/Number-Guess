@@ -9,8 +9,6 @@ import Congratulations from './pages/Congratulations.tsx'
 import { EasyMode, MediumMode, HardMode, ExtremeMode } from './pages/Game.tsx'
 
 import { ViewController, View } from './ViewController/ViewControllerPackage.tsx'
-import ViewReciever from './Test/pages/ViewReciever.tsx'
-import ViewTransfer from './Test/pages/ViewTransfer.tsx'
 
 
 function App() {
