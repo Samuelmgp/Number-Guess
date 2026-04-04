@@ -1,12 +1,17 @@
 import type { GameStats } from "../types/types";
 import { localUserData } from "../utils/user";
 import { incrementModeWins, incrementGamesPlayed, incrementTotalGuesses, incrementGamesWon } from "../db/local_user";
+import { useState } from "react";
 
 export default function Congratulations({ navigateTo, getData }: { navigateTo: (to?: string) => void, getData: () => GameStats }) {
     const props = getData() as GameStats | undefined;
     console.log("Congratulations Props:", props);
+
+    const [lockout, setLockout] = useState(false);
+
     async function updateUserStats() {
-        if (!localUserData || !props) return;
+        if (!localUserData || !props || lockout) return;
+        setLockout(true);
 
         incrementGamesPlayed(1, localUserData);
         incrementGamesWon(1, localUserData);
@@ -15,6 +20,7 @@ export default function Congratulations({ navigateTo, getData }: { navigateTo: (
 
         setTimeout(() => {
             navigateTo("menu");
+            setLockout(false);
         }, 1500);
     }
     
@@ -52,7 +58,7 @@ export default function Congratulations({ navigateTo, getData }: { navigateTo: (
     ) 
     :
     (
-        <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-green-400 to-blue-500">
+        <div className="flex flex-col items-center justify-center h-screen bg-linear-to-b from-green-400 to-blue-500">
             <h1 className="text-5xl font-bold text-white mb-6">Congratulations!</h1>
             <p className="text-xl text-white mb-4">You've successfully guessed the number!</p>
             <button 

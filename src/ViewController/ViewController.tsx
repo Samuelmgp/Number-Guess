@@ -30,7 +30,6 @@ export class ViewController extends React.Component<React.PropsWithChildren, Sta
     };
 
     navigateTo = (to?: ViewID, props?: any) => {
-        console.log(`Navigating to: ${to}`, props);
         if (to === null || to === undefined) return;
         if (to === this.state.currentView || to === "") return; // No change if navigating to the same view
         if (to === 'previous' && this.state.previousView) {

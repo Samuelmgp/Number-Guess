@@ -11,7 +11,6 @@ function createLocalUserData(user: User): void {
 
 async function createJSONCredentialToken(user: any, username: string): Promise<JSONCredentialToken> {
     try {
-        console.log("user: ", user);
         const token: JSONCredentialToken = {
             accessToken: await user.getIdToken(),
             uid: user.uid,
